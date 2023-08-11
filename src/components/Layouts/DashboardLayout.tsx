@@ -6,14 +6,14 @@ interface DashboardProps {
 const DashboardLayout = ({children}: DashboardProps) => {
   return (
     <div>
-      <div className="grid grid-cols-12 gap-5">
+      <div className="flex">
         {/* Sidebar */}
-        <div className="col-span-3">
+        <div className="w-72 duration-300 ease-linear">
           <Sidebar/>
         </div>
 
         {/* Content */}
-        <div className="col-span-9">{children}</div>
+        <div className="flex flex-1">{children}</div>
       </div>
     </div>
   );

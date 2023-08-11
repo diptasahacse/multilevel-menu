@@ -18,7 +18,9 @@ const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
 
   const {asPath} = useRouter()
   const hasChildren = item.children.length > 0;
-  const [expanded, setExpanded] = useState(false);
+  // Load expanded state from sessionStorage if available
+  const savedExpandedState = sessionStorage.getItem(`expanded-${item.id}`);
+  const [expanded, setExpanded] = useState(savedExpandedState === "true");
 
   let Icon = null;
   if (item?.icon) {
@@ -28,14 +30,13 @@ const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
       width: "18",
     });
   }
-  // Use useEffect to update the expansion state when the pathname changes
+
   useEffect(() => {
-    if (hasChildren && item.link === asPath) {
-      setExpanded(true);
-    } else {
-      setExpanded(false);
+    if (hasChildren) {
+      sessionStorage.setItem(`expanded-${item.id}`, expanded.toString());
     }
-  }, [asPath, hasChildren, item.link]);
+  }, [expanded, hasChildren, item.id]);
+
   return (
     <>
       {hasChildren ? (
