@@ -5,15 +5,19 @@ import {
   faChevronDown,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import { TreeItemData } from "@/pages";
 import Image from "next/image";
 import Link from "next/link";
+import { TreeItemData } from "./Layouts/Sidebar";
+import { useRouter } from "next/router";
 
 interface TreeItemProps {
   item: TreeItemData;
 }
 
 const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
+
+  const {asPath} = useRouter()
+  console.log(asPath)
   const hasChildren = item.children.length > 0;
   const [expanded, setExpanded] = useState(false);
 
@@ -29,7 +33,7 @@ const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
     <>
       {hasChildren ? (
         <div
-          className="group hover:bg-[#62842c] rounded-lg flex items-center justify-between py-2.5 px-3 my-1 cursor-pointer"
+          className={`${expanded ? "text-[#62842c]" : ""} group hover:bg-[#62842c] rounded-lg flex items-center justify-between py-2.5 px-3 my-1 cursor-pointer`}
           onClick={() => setExpanded((state) => !state)}
         >
           <p className="flex gap-2 items-center group-hover:text-white">
@@ -39,12 +43,12 @@ const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
           <span>
             {expanded
               ? item.children.length > 0 && (
-                  <span className={`hover:text-red-800 text-red-800 text-xs`}>
+                  <span className={` text-xs group-hover:text-white`}>
                     <FontAwesomeIcon icon={faChevronDown} />
                   </span>
                 )
               : item.children.length > 0 && (
-                  <span className="hover:text-red-800 text-xs">
+                  <span className=" text-xs group-hover:text-white">
                     <FontAwesomeIcon icon={faChevronRight} />
                   </span>
                 )}
