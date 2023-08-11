@@ -1,6 +1,6 @@
 // TreeItem.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { cloneElement, useState } from "react";
+import React, { cloneElement, useEffect, useState } from "react";
 import {
   faChevronDown,
   faChevronRight,
@@ -17,7 +17,6 @@ interface TreeItemProps {
 const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
 
   const {asPath} = useRouter()
-  console.log(asPath)
   const hasChildren = item.children.length > 0;
   const [expanded, setExpanded] = useState(false);
 
@@ -29,6 +28,14 @@ const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
       width: "18",
     });
   }
+  // Use useEffect to update the expansion state when the pathname changes
+  useEffect(() => {
+    if (hasChildren && item.link === asPath) {
+      setExpanded(true);
+    } else {
+      setExpanded(false);
+    }
+  }, [asPath, hasChildren, item.link]);
   return (
     <>
       {hasChildren ? (
