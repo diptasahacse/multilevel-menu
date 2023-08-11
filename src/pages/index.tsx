@@ -1,15 +1,12 @@
 import TreeMenu from "@/components/TreeMenu";
 import React from "react";
-import { faGauge } from "@fortawesome/free-solid-svg-icons";
-import HomeImage from "../assets/home.png";
-import ShoppingImage from "../assets/shopping-cart.png";
-import BagImage from "../assets/bag.png";
-import ShoppingBagImage from "../assets/shopping-bag.png";
-import RefundImage from "../assets/refund.png";
-import { StaticImageData } from "next/image";
+
+import HomeIcon from "@/components/icons/HomeIcon";
+import ShippingIcon from "@/components/icons/ShippingIcon";
+
 export interface TreeItemData {
   id: number;
-  icon?: StaticImageData;
+  icon?: JSX.Element;
   link?: string;
   label: string;
   children: TreeItemData[];
@@ -19,27 +16,27 @@ const Home = () => {
     {
       id: 1,
       link: "/",
-      icon: HomeImage,
+      icon: <HomeIcon/>,
       label: "Dashboard",
       children: [],
     },
     {
       id: 3,
       label: "Shipping",
-      icon: ShoppingImage,
+      icon: <ShippingIcon/>,
       children: [
         {
           id: 4,
           label: "Shipping for me",
           link: "/shipping-me",
-          icon: BagImage,
+          icon: <HomeIcon/>,
           children: [],
         },
         {
           id: 6,
           label: "Shipping for you",
           link: "/shipping-you",
-          icon: ShoppingBagImage,
+          icon: <HomeIcon/>,
           children: [
             {
               id: 9,
@@ -61,7 +58,7 @@ const Home = () => {
     {
       id: 7,
       link: "/",
-      icon:RefundImage,
+      icon:<HomeIcon/>,
       label: "Refund",
       children: [],
     },
@@ -69,7 +66,7 @@ const Home = () => {
 
   return (
     <div>
-      <h2 className="text-xl font-bold">Multi level Menu</h2>
+     
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-3">
           <TreeMenu data={treeData} />

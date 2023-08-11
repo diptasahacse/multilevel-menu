@@ -9,7 +9,7 @@ interface TreeMenuProps {
 
 const TreeMenu: React.FC<TreeMenuProps> = ({ data }) => {
   return (
-    <div>
+    <div className="pl-3">
       {data.map((item) => (
         <TreeItem key={item.id} item={item} />
       ))}

@@ -1,6 +1,6 @@
 // TreeItem.tsx
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { cloneElement, useState } from "react";
 import {
   faChevronDown,
   faChevronRight,
@@ -14,32 +14,40 @@ interface TreeItemProps {
 }
 
 const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
-    const hasChildren = item.children.length > 0
+  const hasChildren = item.children.length > 0;
   const [expanded, setExpanded] = useState(false);
   const toggleExpand = () => {
     setExpanded(!expanded);
   };
-
+  let Icon = null;
+  if (item?.icon) {
+    Icon = cloneElement(item.icon,{
+      className:" group-hover:text-red-800",
+      height:"18",
+      width:"18"
+    });
+  }
   return (
     <>
       {hasChildren ? (
         <div
-          className=" flex justify-between py-2.5 px-6 cursor-pointer"
+          className="group hover:bg-[#00000021] rounded-lg flex items-center justify-between py-2.5 px-3 my-1 cursor-pointer"
           onClick={toggleExpand}
         >
-          <p className="flex gap-2">
-            {item?.icon && (
-              <Image height={20} width={20} alt="Icon" src={item?.icon} />
-            )}
+          <p className="flex gap-2 items-center group-hover:text-red-800">
+            {item?.icon && <span>{Icon}</span>}
             <span>{item.label}</span>
           </p>
           <span>
             {expanded
               ? item.children.length > 0 && (
+                <span className={`hover:text-red-800 text-red-800 text-xs`}>
                   <FontAwesomeIcon icon={faChevronDown} />
+                </span>
+                  
                 )
               : item.children.length > 0 && (
-                  <FontAwesomeIcon icon={faChevronRight} />
+                  <span className="hover:text-red-800 text-xs"><FontAwesomeIcon icon={faChevronRight} /></span>
                 )}
           </span>
         </div>
@@ -47,23 +55,13 @@ const TreeItem: React.FC<TreeItemProps> = ({ item }) => {
         item.link && (
           <Link
             href={item.link}
-            className=" flex justify-between py-2.5 px-6 cursor-pointer"
+            className=" flex hover:bg-[#00000021] rounded-lg group justify-between py-2.5 px-3 my-1 cursor-pointer"
           >
-            <p className="flex gap-2">
-              {item?.icon && (
-                <Image height={20} width={20} alt="Icon" src={item?.icon} />
-              )}
+            <p className="flex items-center gap-2 group-hover:text-red-800">
+              {item?.icon && <span>{Icon}</span> }
               <span>{item.label}</span>
             </p>
-            <span>
-              {expanded
-                ? item.children.length > 0 && (
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  )
-                : item.children.length > 0 && (
-                    <FontAwesomeIcon icon={faChevronRight} />
-                  )}
-            </span>
+            
           </Link>
         )
       )}
