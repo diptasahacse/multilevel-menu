@@ -40,15 +40,14 @@ const DropdownLink = ({ item }: TreeItemProps) => {
   const { pathname } = useRouter();
 
   return (
-    <SidebarLinkGroup
+    <LinkGroup
       activeCondition={pathname === item.path || pathname.includes(item.slug)}
     >
       {(handleClick, open) => {
-        console.log((pathname === item.path || pathname.includes(item.slug)))
         return (
           <React.Fragment>
             <div
-              className={`group cursor-pointer flex items-center justify-between gap-2.5 rounded-sm py-2 px-4  duration-300 ease-in-out hover:text-[#62842c]  ${
+              className={`group cursor-pointer flex items-center justify-between gap-1 rounded-sm py-2 px-4  duration-300 ease-in-out hover:text-[#62842c]  ${
                 (pathname === item.path || pathname.includes(item.slug)) &&
                 "text-[#62842c] "
               }`}
@@ -66,7 +65,7 @@ const DropdownLink = ({ item }: TreeItemProps) => {
             </div>
             {/* <!-- Dropdown Menu Start --> */}
             <ul
-              className={`mt-2 mb-5.5 flex flex-col gap-2.5 pl-6 ${
+              className={` flex flex-col gap-1 pl-2 ${
                 !open && "hidden"
               }`}
             >
@@ -82,19 +81,19 @@ const DropdownLink = ({ item }: TreeItemProps) => {
           </React.Fragment>
         );
       }}
-    </SidebarLinkGroup>
+    </LinkGroup>
   );
 };
 
-interface SidebarLinkGroupProps {
+interface LinkGroupProps {
   children: (handleClick: () => void, open: boolean) => ReactNode;
   activeCondition: boolean;
 }
 
-const SidebarLinkGroup = ({
+const LinkGroup = ({
   children,
   activeCondition,
-}: SidebarLinkGroupProps) => {
+}: LinkGroupProps) => {
   const [open, setOpen] = useState<boolean>(activeCondition);
   const handleClick = () => {
     setOpen(!open);

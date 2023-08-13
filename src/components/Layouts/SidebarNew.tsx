@@ -4,6 +4,8 @@ import {
   faCartShopping,
   faCartFlatbed,
   faRecycle,
+  faWallet,
+  faDollarSign,
 } from "@fortawesome/free-solid-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import MenuItemNew from "./MenuItemNew";
@@ -43,6 +45,22 @@ const Sidebar = () => {
           path: "/dashboard/buy-ship/my-request",
           dropdownItems: [],
         },
+      ],
+    },
+    {
+      title: "My Wallet",
+      slug: "my-wallet",
+      icon: faWallet,
+      path: "/dashboard/my-wallet",
+      dropdownItems: [
+        {
+          title: "My Balance",
+          slug: "my-balance",
+          icon: faDollarSign,
+          path: "/dashboard/my-wallet/my-balance",
+          dropdownItems: [],
+        },
+       
       ],
     },
   ];
