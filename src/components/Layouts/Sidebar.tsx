@@ -1,5 +1,5 @@
 import React from "react";
-import TreeMenu from "../TreeMenu";
+import TreeMenu from "./TreeMenu";
 import HomeIcon from "@/components/icons/HomeIcon";
 import ShippingIcon from "@/components/icons/ShippingIcon";
 

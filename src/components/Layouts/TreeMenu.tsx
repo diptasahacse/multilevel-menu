@@ -1,7 +1,7 @@
 // TreeMenu.tsx
 import React from "react";
 import TreeItem from "./TreeItem";
-import { TreeItemData } from "./Layouts/Sidebar";
+import { TreeItemData } from "./Sidebar";
 
 
 interface TreeMenuProps {

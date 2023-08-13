@@ -9,7 +9,7 @@ const DashboardLayout = ({ children }: DashboardProps) => {
     <div>
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-72 duration-300 ease-linear">
+        <div className="w-72 h-screen bg-gray-200 duration-300 ease-linear">
           {/* <Sidebar/> */}
           <SidebarNew />
         </div>
