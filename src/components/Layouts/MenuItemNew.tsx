@@ -25,7 +25,7 @@ const NormalLink = ({ item }: TreeItemProps) => {
     <li>
       <Link
         href={item.path}
-        className={`group  relative flex items-center gap-2.5 rounded-md py-2 px-4 duration-300 ease-in-out hover:bg-gray ${
+        className={`group  relative flex transition-all items-center gap-2 rounded-lg py-2 px-4 duration-300 ease-in-out hover:bg-gray ${
           pathname === item.path ? "bg-[#62842c] text-white" : "hover:text-[#62842c]"
         }`}
       >
