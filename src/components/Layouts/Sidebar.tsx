@@ -1,70 +1,89 @@
 import React from "react";
-import TreeMenu from "./TreeMenu";
-import HomeIcon from "@/components/icons/HomeIcon";
-import ShippingIcon from "@/components/icons/ShippingIcon";
-
-export interface TreeItemData {
-  id: number;
-  icon?: JSX.Element;
-  link?: string;
-  label: string;
-  children: TreeItemData[];
+import {
+  faDashboard,
+  faCartShopping,
+  faCartFlatbed,
+  faRecycle,
+  faWallet,
+  faDollarSign,
+} from "@fortawesome/free-solid-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import MenuItem from "./MenuItem";
+export interface SidebarItem {
+  title: string;
+  icon: IconDefinition;
+  path: string;
+  dropdownItems: SidebarItem[];
+  key: number;
 }
 const Sidebar = () => {
-  const treeData: TreeItemData[] = [
+  const menuData: SidebarItem[] = [
     {
-      id: 1,
-      link: "/",
-      icon: <HomeIcon />,
-      label: "Dashboard",
-      children: [],
+      key: 1,
+      title: "Dashboard",
+      icon: faDashboard,
+      path: "/dashboard",
+      dropdownItems: [],
     },
     {
-      id: 3,
-      label: "Shipping",
-      icon: <ShippingIcon />,
-      children: [
+      key: 2,
+      title: "Buy & Ship For Me",
+      icon: faDashboard,
+      path: "/dashboard/buy-ship-for-me",
+      dropdownItems: [],
+    },
+    {
+      key: 3,
+      title: "Buy Ship",
+      icon: faCartShopping,
+      path: "/dashboard/buy-ship",
+      dropdownItems: [
         {
-          id: 4,
-          label: "Shipping for me",
-          link: "/shipping-me",
-          icon: <HomeIcon />,
-          children: [],
+          key: 3.1,
+          title: "My Order",
+          icon: faCartFlatbed,
+          path: "/dashboard/buy-ship/my-order",
+          dropdownItems: [],
         },
         {
-          id: 6,
-          label: "Shipping for you",
-          link: "/shipping-you",
-          icon: <HomeIcon />,
-          children: [
-            {
-              id: 9,
-              label: "Alibaba",
-              link: "/alibaba",
-              children: [
-                {
-                  id: 10,
-                  label: "Balibaba",
-                  link: "/bali-baba",
-                  children: [],
-                },
-              ],
-            },
-          ],
+          key: 3.2,
+          title: "My Request",
+          icon: faRecycle,
+          path: "/dashboard/buy-ship/my-request",
+          dropdownItems: [],
+        },
+        {
+          key: 3.3,
+          title: "Ship For me",
+          icon: faRecycle,
+          path: "/dashboard/buy-ship/ship-for-me",
+          dropdownItems: [],
         },
       ],
     },
     {
-      id: 7,
-      link: "/refund",
-      icon: <HomeIcon />,
-      label: "Refund",
-      children: [],
+      key: 4,
+      title: "My Wallet",
+      icon: faWallet,
+      path: "/dashboard/my-wallet",
+      dropdownItems: [
+        {
+          key: 4.1,
+          title: "My Balance",
+          icon: faDollarSign,
+          path: "/dashboard/my-wallet/my-balance",
+          dropdownItems: [],
+        },
+      ],
     },
   ];
   return (
-    <div>
-      <TreeMenu data={treeData} />
+    <div className="py-3 px-1">
+      <ul>
+        {menuData.map((item: SidebarItem, index) => (
+          <MenuItem key={index} item={item} />
+        ))}
+      </ul>
     </div>
   );
 };

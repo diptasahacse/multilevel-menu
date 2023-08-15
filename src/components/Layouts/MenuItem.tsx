@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from "react";
-import { SidebarItem } from "./SidebarNew";
+import { SidebarItem } from "./Sidebar";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,9 +8,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 interface TreeItemProps {
   item: SidebarItem;
 }
-let currentPathName = ''
-const MenuItemNew: React.FC<TreeItemProps> = ({ item }) => {
-  currentPathName = useRouter().pathname
+const MenuItem: React.FC<TreeItemProps> = ({ item }) => {
   return (
     <>
       {item.dropdownItems.length === 0 ? (
@@ -42,19 +40,19 @@ const NormalLink = ({ item }: TreeItemProps) => {
 
 const DropdownLink = ({ item }: TreeItemProps) => {
   const { pathname } = useRouter();
-  const pathnameIsThere = item.dropdownItems.find((item)=> item.path === pathname) ? true : false
-
+  const pathnameIsThere = item.dropdownItems.find(
+    (item) => item.path === pathname
+  )
+    ? true
+    : false;
   return (
-    <LinkGroup
-      activeCondition={pathnameIsThere}
-    >
+    <LinkGroup activeCondition={pathnameIsThere}>
       {(handleClick, open) => {
         return (
           <React.Fragment>
             <div
               className={`group cursor-pointer flex items-center justify-between gap-1 rounded-sm py-2 px-4  duration-300 ease-in-out hover:text-[#62842c]  ${
-                (pathnameIsThere) &&
-                "text-[#62842c] "
+                pathnameIsThere && "text-[#62842c] "
               }`}
               onClick={(e) => {
                 handleClick();
@@ -64,12 +62,12 @@ const DropdownLink = ({ item }: TreeItemProps) => {
                 <FontAwesomeIcon icon={item.icon} />
                 <span>{item.title}</span>
               </div>
-              <span className={`${open && "rotate-90"}`}>
+              <span className={ ` transition-all ${open ? "rotate-90" : ""}`}>
                 <FontAwesomeIcon icon={faChevronRight} />{" "}
               </span>
             </div>
             {/* <!-- Dropdown Menu Start --> */}
-            <ul className={` flex flex-col gap-1 pl-2 ${!open && "hidden"}`}>
+            <ul className={` flex flex-col gap-1 pl-2 ${!open ? "hidden" : ""}`}>
               {item.dropdownItems.map((item: SidebarItem, index) =>
                 item.dropdownItems.length > 0 ? (
                   <DropdownLink key={index} item={item} />
@@ -99,4 +97,4 @@ const LinkGroup = ({ children, activeCondition }: LinkGroupProps) => {
 
   return <li>{children(handleClick, open)}</li>;
 };
-export default MenuItemNew;
+export default MenuItem;

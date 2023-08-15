@@ -4,7 +4,7 @@ import IProps from "./interface";
 const HomeIcon = ({ className, height = "20", width = "20" }: IProps) => {
   return (
     <svg
-    className={"fill-current " + className}
+      className={"fill-current " + className}
       xmlns="http://www.w3.org/2000/svg"
       height={height}
       viewBox="0 -960 960 960"
