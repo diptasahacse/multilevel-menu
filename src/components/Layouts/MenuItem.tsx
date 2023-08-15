@@ -48,7 +48,7 @@ const DropdownLink = ({ item }: TreeItemProps) => {
     <LinkGroup activeCondition={isDropdownOpen}>
       {(handleClick, open) => {
         return (
-          <React.Fragment>
+          <>
             <div
               className={`group cursor-pointer flex items-center justify-between gap-1 rounded-sm py-2 px-4  duration-300 ease-in-out hover:text-[#62842c]  ${
                 (isDropdownOpen) && "text-[#62842c] "
@@ -76,7 +76,7 @@ const DropdownLink = ({ item }: TreeItemProps) => {
               )}
             </ul>
             {/* <!-- Dropdown Menu End --> */}
-          </React.Fragment>
+          </>
         );
       }}
     </LinkGroup>
