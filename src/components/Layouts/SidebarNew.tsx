@@ -11,56 +11,69 @@ import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import MenuItemNew from "./MenuItemNew";
 export interface SidebarItem {
   title: string;
-  slug: string;
   icon: IconDefinition;
   path: string;
   dropdownItems: SidebarItem[];
+  key: number;
 }
 const Sidebar = () => {
   const menuData: SidebarItem[] = [
     {
+      key: 1,
       title: "Dashboard",
-      slug: "dashboard",
       icon: faDashboard,
       path: "/dashboard",
       dropdownItems: [],
     },
     {
+      key: 2,
+      title: "Buy & Ship For Me",
+      icon: faDashboard,
+      path: "/dashboard/buy-ship-for-me",
+      dropdownItems: [],
+    },
+    {
+      key: 3,
       title: "Buy Ship",
-      slug: "buy-ship",
       icon: faCartShopping,
       path: "/dashboard/buy-ship",
       dropdownItems: [
         {
+          key: 3.1,
           title: "My Order",
-          slug: "my-order",
           icon: faCartFlatbed,
           path: "/dashboard/buy-ship/my-order",
           dropdownItems: [],
         },
         {
+          key: 3.2,
           title: "My Request",
-          slug: "my-request",
           icon: faRecycle,
           path: "/dashboard/buy-ship/my-request",
+          dropdownItems: [],
+        },
+        {
+          key: 3.3,
+          title: "Ship For me",
+          icon: faRecycle,
+          path: "/dashboard/buy-ship/ship-for-me",
           dropdownItems: [],
         },
       ],
     },
     {
+      key: 4,
       title: "My Wallet",
-      slug: "my-wallet",
       icon: faWallet,
       path: "/dashboard/my-wallet",
       dropdownItems: [
         {
+          key: 4.1,
           title: "My Balance",
-          slug: "my-balance",
           icon: faDollarSign,
           path: "/dashboard/my-wallet/my-balance",
           dropdownItems: [],
         },
-       
       ],
     },
   ];

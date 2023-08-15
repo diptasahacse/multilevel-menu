@@ -8,7 +8,9 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 interface TreeItemProps {
   item: SidebarItem;
 }
+let currentPathName = ''
 const MenuItemNew: React.FC<TreeItemProps> = ({ item }) => {
+  currentPathName = useRouter().pathname
   return (
     <>
       {item.dropdownItems.length === 0 ? (
@@ -26,7 +28,9 @@ const NormalLink = ({ item }: TreeItemProps) => {
       <Link
         href={item.path}
         className={`group  relative flex transition-all items-center gap-2 rounded-lg py-2 px-4 duration-300 ease-in-out hover:bg-gray ${
-          pathname === item.path ? "bg-[#62842c] text-white" : "hover:text-[#62842c]"
+          pathname === item.path
+            ? "bg-[#62842c] text-white"
+            : "hover:text-[#62842c]"
         }`}
       >
         <FontAwesomeIcon icon={item.icon} />
@@ -38,17 +42,18 @@ const NormalLink = ({ item }: TreeItemProps) => {
 
 const DropdownLink = ({ item }: TreeItemProps) => {
   const { pathname } = useRouter();
+  const pathnameIsThere = item.dropdownItems.find((item)=> item.path === pathname) ? true : false
 
   return (
     <LinkGroup
-      activeCondition={pathname === item.path || pathname.includes(item.slug)}
+      activeCondition={pathnameIsThere}
     >
       {(handleClick, open) => {
         return (
           <React.Fragment>
             <div
               className={`group cursor-pointer flex items-center justify-between gap-1 rounded-sm py-2 px-4  duration-300 ease-in-out hover:text-[#62842c]  ${
-                (pathname === item.path || pathname.includes(item.slug)) &&
+                (pathnameIsThere) &&
                 "text-[#62842c] "
               }`}
               onClick={(e) => {
@@ -64,11 +69,7 @@ const DropdownLink = ({ item }: TreeItemProps) => {
               </span>
             </div>
             {/* <!-- Dropdown Menu Start --> */}
-            <ul
-              className={` flex flex-col gap-1 pl-2 ${
-                !open && "hidden"
-              }`}
-            >
+            <ul className={` flex flex-col gap-1 pl-2 ${!open && "hidden"}`}>
               {item.dropdownItems.map((item: SidebarItem, index) =>
                 item.dropdownItems.length > 0 ? (
                   <DropdownLink key={index} item={item} />
@@ -90,10 +91,7 @@ interface LinkGroupProps {
   activeCondition: boolean;
 }
 
-const LinkGroup = ({
-  children,
-  activeCondition,
-}: LinkGroupProps) => {
+const LinkGroup = ({ children, activeCondition }: LinkGroupProps) => {
   const [open, setOpen] = useState<boolean>(activeCondition);
   const handleClick = () => {
     setOpen(!open);
