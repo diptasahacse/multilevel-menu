@@ -40,19 +40,18 @@ const NormalLink = ({ item }: TreeItemProps) => {
 
 const DropdownLink = ({ item }: TreeItemProps) => {
   const { pathname } = useRouter();
-  const pathnameIsThere = item.dropdownItems.find(
-    (item) => item.path === pathname
-  )
-    ? true
-    : false;
+  const isDropdownOpen = (
+    pathname === item.path || // Check if the current route matches the item's path
+    item.dropdownItems.some(subItem => pathname.includes(subItem.path)) // Check if any nested dropdown item's path matches the current route
+  );
   return (
-    <LinkGroup activeCondition={pathnameIsThere}>
+    <LinkGroup activeCondition={isDropdownOpen}>
       {(handleClick, open) => {
         return (
           <React.Fragment>
             <div
               className={`group cursor-pointer flex items-center justify-between gap-1 rounded-sm py-2 px-4  duration-300 ease-in-out hover:text-[#62842c]  ${
-                pathnameIsThere && "text-[#62842c] "
+                (isDropdownOpen) && "text-[#62842c] "
               }`}
               onClick={(e) => {
                 handleClick();
@@ -67,7 +66,7 @@ const DropdownLink = ({ item }: TreeItemProps) => {
               </span>
             </div>
             {/* <!-- Dropdown Menu Start --> */}
-            <ul className={` flex flex-col gap-1 pl-2 ${!open ? "hidden" : ""}`}>
+            <ul className={` flex flex-col gap-1 pl-3 ${!open ? "hidden" : ""}`}>
               {item.dropdownItems.map((item: SidebarItem, index) =>
                 item.dropdownItems.length > 0 ? (
                   <DropdownLink key={index} item={item} />
