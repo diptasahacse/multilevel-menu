@@ -9,7 +9,14 @@ interface OrderListType {
   orderId: string;
   data: ProductType[];
 }
-
+interface CheckboxChangeEvent {
+  target: HTMLInputElement;
+}
+interface ProductPropType {
+  item: ProductType;
+  selectedState: OrderListType;
+  setSelectedState: React.Dispatch<React.SetStateAction<OrderListType>>;
+}
 const list: OrderListType[] = [
   {
     orderId: "1",
@@ -54,55 +61,49 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-interface SelectedItemType {
-  id: string;
-}
-
-interface SelectedType {
-  id: string;
-  data: SelectedItemType[];
-}
-/*
-
-
-
-*/
 const OrderBox = ({ item }: { item: OrderListType }) => {
-  const [selectedState, setSelectedState] = useState<SelectedType>({
-    id: item.orderId,
+  const [selectedState, setSelectedState] = useState<OrderListType>({
+    orderId: item.orderId,
     data: [],
   });
-  const handleChecked = (e, id: string) => {
+  const handleChecked = (e: CheckboxChangeEvent, id: string) => {
     if (e.target.checked) {
-      const data = item.data.map((item) => {
-        return {
-          id: item.id,
-        };
-      });
       setSelectedState({
         ...selectedState,
-
-        data,
+        data: item.data,
       });
     } else {
       setSelectedState({
         ...selectedState,
-
         data: [],
       });
     }
   };
+
+  const actionHandler = () => {
+    console.log(selectedState);
+  };
   return (
-    <div>
+    <div className="mb-7">
       <div>
-        <div className=" flex items-center gap-1">
-          <input
-            onChange={(e) => handleChecked(e, item.orderId)}
-            type="checkbox"
-          />
-          <h3>OrderId: {item.orderId}</h3>
+        <div className=" bg-green-300 px-4 py-2 rounded-md flex justify-between items-center">
+          <div className=" flex items-center gap-1">
+            <input
+              onChange={(e) => handleChecked(e, item.orderId)}
+              type="checkbox"
+              checked={selectedState.data.length > 0 ? true : false}
+            />
+            <h3>OrderId: {item.orderId}</h3>
+          </div>
+          <button
+            disabled={selectedState.data.length > 0 ? false : true}
+            onClick={actionHandler}
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            Action
+          </button>
         </div>
-        <div className=" pl-3">
+        <div className=" mt-3 pl-3">
           {item.data.map((item, index) => (
             <ProductItem
               selectedState={selectedState}
@@ -116,14 +117,13 @@ const OrderBox = ({ item }: { item: OrderListType }) => {
     </div>
   );
 };
-interface ProType {
-  item: ProductType;
-  selectedState: SelectedType;
-  setSelectedState: React.Dispatch<React.SetStateAction<SelectedType>>;
-}
 
-const ProductItem = ({ item, selectedState, setSelectedState }: ProType) => {
-  const handleCheck = (e) => {
+const ProductItem = ({
+  item,
+  selectedState,
+  setSelectedState,
+}: ProductPropType) => {
+  const handleCheck = (e: CheckboxChangeEvent) => {
     if (!e.target.checked) {
       const selectedData = selectedState.data.filter((i) => i.id !== item.id);
       setSelectedState({
@@ -133,6 +133,7 @@ const ProductItem = ({ item, selectedState, setSelectedState }: ProType) => {
     } else {
       const d = {
         id: item.id,
+        name: item.name,
       };
 
       setSelectedState({

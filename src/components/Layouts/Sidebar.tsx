@@ -135,6 +135,21 @@ const Sidebar = () => {
         },
       ],
     },
+    {
+      key: "5",
+      title: "Table",
+      icon: faDashboard,
+      path: "/dashboard/table",
+      dropdownItems: [
+        {
+          key: "5.1",
+          title: "Product",
+          icon: faDashboard,
+          path: "/dashboard/table/product",
+          dropdownItems: [],
+        },
+      ],
+    },
   ];
   return (
     <div className="py-3 px-1">
