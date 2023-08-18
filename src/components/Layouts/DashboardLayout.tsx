@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: DashboardProps) => {
 
         {/* Content */}
         <div className=" flex-1 bg-slate-300">
-          <div className="flex justify-center items-center h-full text-3xl font-bold text-gray-600">{children}</div>
+          <div className=" text-gray-600">{children}</div>
         </div>
       </div>
     </div>
